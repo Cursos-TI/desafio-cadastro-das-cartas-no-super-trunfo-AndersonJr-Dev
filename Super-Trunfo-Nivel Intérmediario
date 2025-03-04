@@ -10,6 +10,8 @@ typedef struct
     float area;
     float pib;
     int pontos_turisticos;
+    float densidade_populacional;
+    double pib_per_capita;
 } Carta;
 
 // Função para limpar o buffer de entrada
@@ -25,16 +27,16 @@ void cadastrarCarta(Carta *c)
     printf("\n=== Cadastro de Carta ===\n");
 
     printf("Digite o nome do estado: ");
-    scanf(" %[^\n]", c->estado); // Leitura do nome do estado
-    limparBuffer();              // Limpar buffer após ler o estado
+    scanf(" %s[^\n]", c->estado); // Leitura do nome do estado
+    limparBuffer();               // Limpar buffer após ler o estado
 
     printf("Digite o código da carta: ");
     scanf("%d", &c->codigo); // Leitura do código
     limparBuffer();          // Limpar buffer após ler o código
 
     printf("Digite o nome da cidade: ");
-    scanf(" %[^\n]", c->nome); // Leitura do nome da cidade
-    limparBuffer();            // Limpar buffer após ler o nome
+    scanf(" %s[^\n]", c->nome); // Leitura do nome da cidade
+    limparBuffer();             // Limpar buffer após ler o nome
 
     printf("Digite a população da cidade: ");
     scanf("%d", &c->populacao); // Leitura da população
@@ -51,8 +53,12 @@ void cadastrarCarta(Carta *c)
     printf("Digite o número de pontos turísticos: ");
     scanf("%d", &c->pontos_turisticos); // Leitura do número de pontos turísticos
     limparBuffer();                     // Limpar buffer após ler os pontos turísticos
-
     printf("\nCarta cadastrada com sucesso!\n");
+
+    // calcular a densidade populacional
+    c->densidade_populacional = c->populacao / c->area;
+    // calcular pib per capita
+    c->pib_per_capita = c->pib / c->populacao;
 }
 
 // Função para exibir os dados de uma carta
@@ -66,6 +72,8 @@ void exibirCarta(const Carta *c)
     printf("Área: %.2f km²\n", c->area);
     printf("PIB: %.2f bilhões\n", c->pib);
     printf("Pontos turísticos: %d\n", c->pontos_turisticos);
+    printf("Densidade populacional: %.2f hab/km²\n", c->densidade_populacional);
+    printf("PIB per capita: %lf pib/população\n", c->pib_per_capita);
 }
 
 int main()
@@ -87,6 +95,8 @@ int main()
     printf("2 - Área\n");
     printf("3 - PIB\n");
     printf("4 - Pontos turísticos\n");
+    printf("5 - Densidade populacional\n");
+    printf("6 - PIB per capita\n");
     scanf("%d", &atributo);
 
     // comparação dos atributos
@@ -124,6 +134,23 @@ int main()
         else
             printf("Empate!\n");
         break;
+    case 5:
+        if (carta1.densidade_populacional > carta2.densidade_populacional)
+            printf("A carta 1 venceu!\n");
+        else if (carta1.densidade_populacional < carta2.densidade_populacional)
+            printf("A carta 2 venceu!\n");
+        else
+            printf("Empate!\n");
+        break;
+    case 6:
+        if (carta1.pib_per_capita > carta2.pib_per_capita)
+            printf("A carta 1 venceu!\n");
+        else if (carta1.pib_per_capita < carta2.pib_per_capita)
+            printf("A carta 2 venceu!\n");
+        else
+            printf("Empate!\n");
+        break;
+
     default:
         printf("Opção inválida!\n");
     }
