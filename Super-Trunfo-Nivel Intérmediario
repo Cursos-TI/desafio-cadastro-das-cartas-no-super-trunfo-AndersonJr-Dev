@@ -135,9 +135,9 @@ int main()
             printf("Empate!\n");
         break;
     case 5:
-        if (carta1.densidade_populacional < carta2.densidade_populacional)
+        if (carta1.densidade_populacional > carta2.densidade_populacional)
             printf("A carta 1 venceu!\n");
-        else if (carta1.densidade_populacional > carta2.densidade_populacional)
+        else if (carta1.densidade_populacional < carta2.densidade_populacional)
             printf("A carta 2 venceu!\n");
         else
             printf("Empate!\n");
